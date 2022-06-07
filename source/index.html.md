@@ -116,21 +116,6 @@ _Overview of market data for all tickers & all markets._
       "prefix": "",
       "active": true
     },
-    "DOGE": {
-      "name": "Dogecoin",
-      "ucid": 74,
-      "can_withdraw": true,
-      "can_deposit": true,
-      "min_withdraw": 200,
-      "max_withdraw ": 0,
-      "maker_fee": 0.1,
-      "taker_fee": 0.2,
-      "id": "4156",
-      "precision": 5,
-      "decimals": 8,
-      "prefix": "XBTSX.",
-      "active": true
-    },
     "BTC": {
       "name": "Bitcoin",
       "ucid": 1,
@@ -143,21 +128,6 @@ _Overview of market data for all tickers & all markets._
       "id": "4157",
       "precision": 8,
       "decimals": 8,
-      "prefix": "XBTSX.",
-      "active": true
-    },
-    "ETH": {
-      "name": "Ethereum",
-      "ucid": 1027,
-      "can_withdraw": true,
-      "can_deposit": true,
-      "min_withdraw": 0.015,
-      "max_withdraw ": 0,
-      "maker_fee": 0.1,
-      "taker_fee": 0.1,
-      "id": "4760",
-      "precision": 7,
-      "decimals": 18,
       "prefix": "XBTSX.",
       "active": true
     }
@@ -455,6 +425,55 @@ _Returns last trades history (up to 300) for specified ticker_
     "quote_volume": "99.396350",
     "timestamp": 1654609419,
     "type": "sell"
+  }
+]
+```
+
+## Market history
+
+_Returns market price & volume history for specified ticker_
+
+**Request URL** <span class='badge'>GET</span> `https://cmc.xbts.io/v2/history/market/<ticker>`
+
+> The above command returns JSON structured like this `GET https://cmc.xbts.io/v2/history/market/BTS_STH`
+
+```json
+[
+  {
+    "base": "BTS",
+    "quote": "STH",
+    "date": "2021-11-20T00:00:00",
+    "base_volume": "75712.59218",
+    "quote_volume": "875887.287249",
+    "high_price": "0.09950",
+    "low_price": "0.07214",
+    "open_price": "0.08031",
+    "close_price": "0.09950",
+    "avg_price": "0.08786"
+  },
+  {
+    "base": "BTS",
+    "quote": "STH",
+    "date": "2021-11-21T00:00:00",
+    "base_volume": "127192.52779",
+    "quote_volume": "1870899.535698",
+    "high_price": "0.09950",
+    "low_price": "0.06000",
+    "open_price": "0.08245",
+    "close_price": "0.09900",
+    "avg_price": "0.08524"
+  },
+  {
+    "base": "BTS",
+    "quote": "STH",
+    "date": "2021-11-22T00:00:00",
+    "base_volume": "3501.53982",
+    "quote_volume": "39503.639947",
+    "high_price": "0.09800",
+    "low_price": "0.07800",
+    "open_price": "0.08900",
+    "close_price": "0.08321",
+    "avg_price": "0.08705"
   }
 ]
 ```
