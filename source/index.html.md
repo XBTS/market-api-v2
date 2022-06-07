@@ -15,7 +15,7 @@ toc_footers:
 
 includes:
 
-- errors
+#- errors
 
 search: true
 
@@ -328,7 +328,7 @@ This endpoint retrieves all tickers.
 
 **_Get specific ticker_**
 
-**Request URL** <span class='badge'>GET</span> `https://cmc.xbts.io/v2/tickers/BTS_STH`
+**Request URL** <span class='badge'>GET</span> `https://cmc.xbts.io/v2/tickers/<ticker>`
 
 **Request Data:**
 
@@ -341,8 +341,7 @@ ticker - as USDT_BTC
 * **quote_id** - Unique Quote ID of cryptocurrency assigned by Unified Cryptoasset ID. According to specification
   coinmarketcap.com
 
-> The above command returns JSON structured like this:
->
+> The above command returns JSON structured like this GET https://cmc.xbts.io/v2/tickers/BTS_STH:
 
 ```json
 {
@@ -367,116 +366,95 @@ ticker - as USDT_BTC
 
 ### Query Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+Parameter | Description
+--------- | -----------
+ticker    | Any XBTS ticker ex. BTS_STH
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
+# Orderbook
 
-## Get a Specific Kitten
+_Return open orders for one ticker_
 
-```ruby
-require 'kittn'
+**Request URL** <span class='badge'>GET</span> `/orderbook/<ticker>`
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
+> The above command returns JSON structured like this `GET https://cmc.xbts.io/v2/orderbook/BTS_STH?depth=50`
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "timestamp": 1654641085,
+  "base": "BTS",
+  "quote": "STH",
+  "bids": [
+    {
+      "price": "0.18800000",
+      "quote": "0.980372",
+      "base": "0.18431"
+    },
+    {
+      "price": "0.18700000",
+      "quote": "1.844331",
+      "base": "0.34489"
+    },
+    {
+      "price": "0.18600000",
+      "quote": "11.693387",
+      "base": "2.17497"
+    }
+  ],
+  "asks": [
+    {
+      "price": "0.36363620",
+      "quote": "50",
+      "base": "18.18181"
+    },
+    {
+      "price": "0.39500000",
+      "quote": "10000",
+      "base": "3950"
+    },
+    {
+      "price": "0.39603960",
+      "quote": "50",
+      "base": "19.80198"
+    }
+  ]
 }
 ```
 
-This endpoint retrieves a specific kitten.
+# Trades
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+## Trade history
 
-### HTTP Request
+_Returns last trades history (up to 300) for specified ticker_
 
-`GET http://example.com/kittens/<ID>`
+**Request URL** <span class='badge'>GET</span> ` https://cmc.xbts.io/v2/trades/<ticker>?limit=300`
 
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
+> The above command returns JSON structured like this `GET  https://cmc.xbts.io/v2/trades/BTS_STH?limit=100`
 
 ```json
-{
-  "id": 2,
-  "deleted": ":("
-}
+[
+  {
+    "trade_id": "190539730",
+    "price": "0.18800000",
+    "base_volume": "18.61569",
+    "quote_volume": "99.019628",
+    "timestamp": 1654614921,
+    "type": "sell"
+  },
+  {
+    "trade_id": "190539728",
+    "price": "0.18900025",
+    "base_volume": "0.11409",
+    "quote_volume": "0.603650",
+    "timestamp": 1654614921,
+    "type": "sell"
+  },
+  {
+    "trade_id": "190539476",
+    "price": "0.18900000",
+    "base_volume": "18.78591",
+    "quote_volume": "99.396350",
+    "timestamp": 1654609419,
+    "type": "sell"
+  }
+]
 ```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
-
