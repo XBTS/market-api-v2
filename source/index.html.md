@@ -2,30 +2,36 @@
 title: XBTS Market API v2
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - json
+
+- json
   #- shell
   #- javascript
 
 toc_footers:
-  - <a href='https://ex.xbts.io'>XBTS DEX</a>
-  - <a href='https://app.xbts.io'>XBTS DeFi</a>
-  - <a href='https://github.com/xbts/market-api-v2'>Documentation source</a>
+
+- <a href='https://ex.xbts.io'>XBTS DEX</a>
+- <a href='https://app.xbts.io'>XBTS DeFi</a>
+- <a href='https://github.com/xbts/market-api-v2'>Documentation source</a>
 
 includes:
-  - errors
+
+- errors
 
 search: true
 
 code_clipboard: true
 
 meta:
-  - name: description
-    content: XBTS DEX Market API v2
+
+- name: description
+  content: XBTS DEX Market API v2
+
 ---
 
 # Introduction
 
-Welcome to the XBTS Free Market API! You can use our API to access XBTS DEX API endpoints, which can get information on market assets, trade pairs, tickers.
+Welcome to the XBTS Free Market API! You can use our API to access XBTS DEX API endpoints, which can get information on
+market assets, trade pairs, order book, tickers, trade history from blockchain.
 
 **Data is broadcasted from the blockchain!**
 
@@ -42,7 +48,6 @@ _Overview of market data for all tickers & all markets._
 * **tickers** - All market tickers with unified_cryptoasset_id (ucid)
 * **assets** - All listed XBTS assets with unified_cryptoasset_id (ucid)
 * **total** - Count trade pairs & assets
-
 
 > The above command returns JSON structured like this:
 
@@ -173,9 +178,11 @@ _Overview of market data for all tickers & all markets._
 **About Return Data:**
 
 * **name** - Asset name
-* **ucid** - Unique ID of cryptocurrency assigned by Unified Cryptoasset ID. According to specification coinmarketcap.com
+* **ucid** - Unique ID of cryptocurrency assigned by Unified Cryptoasset ID. According to specification
+  coinmarketcap.com
 * **id** - BitShares Blockchain registered internal Asset ID ex. https://bts.ai/asset/XBTSX.STH id = 1.3.4099
-* **prefix** - Blockchain asset internal prefix **XBTSX.**ASSET matches all **XBTS DEX** assets in the **BitShares** blockchain ex. https://ex.xbts.io/market/XBTSX.STH_XBTSX.BTC or https://ex.xbts.io/asset/XBTSX.STH
+* **prefix** - Blockchain asset internal prefix **XBTSX.**ASSET matches all **XBTS DEX** assets in the **BitShares**
+  blockchain ex. https://ex.xbts.io/market/XBTSX.STH_XBTSX.BTC or https://ex.xbts.io/asset/XBTSX.STH
 
 > The above command returns JSON structured like this:
 
@@ -244,36 +251,119 @@ _Overview of market data for all tickers & all markets._
 }
 ```
 
-# Kittens
+# Tickers
 
-## Get All Kittens
+## All Tickers
+
+**_Summary of all tickers_**
+
+**Request URL** <span class='badge'>GET</span> `https://cmc.xbts.io/v2/tickers`
+
+**About Return Data:**
+
+* **base_id** - Unique Base ID of cryptocurrency assigned by Unified Cryptoasset ID. According to specification
+  coinmarketcap.com
+* **quote_id** - Unique Quote ID of cryptocurrency assigned by Unified Cryptoasset ID. According to specification
+  coinmarketcap.com
 
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
+{
+  "timestamp": 1654634804,
+  "ticker": {
+    "BTS_STH": {
+      "base_id": 463,
+      "quote_id": 5602,
+      "base_symbol": "BTS",
+      "quote_symbol": "STH",
+      "last": "0.18800000",
+      "sell": "0.20408163",
+      "buy": "0.18800000",
+      "base_volume": "306.34583",
+      "quote_volume": "1635.48191",
+      "change": "1.34",
+      "type": "spot",
+      "isFrozen": 0,
+      "url": "https://ex.xbts.io/market/XBTSX.STH_BTS"
+    },
+    "USDT_USDC": {
+      "base_id": 825,
+      "quote_id": 3408,
+      "base_symbol": "USDT",
+      "quote_symbol": "USDC",
+      "last": "1.01000000",
+      "sell": "1.01000000",
+      "buy": "0.99000000",
+      "base_volume": "254.824794",
+      "quote_volume": "253.676391",
+      "change": "0",
+      "type": "spot",
+      "isFrozen": 0,
+      "url": "https://ex.xbts.io/market/XBTSX.USDC_XBTSX.USDT"
+    },
+    "USDT_HIVE": {
+      "base_id": 825,
+      "quote_id": 5370,
+      "base_symbol": "USDT",
+      "quote_symbol": "HIVE",
+      "last": "0.60027678",
+      "sell": "0.59979400",
+      "buy": "0.59520900",
+      "base_volume": "5597.333138",
+      "quote_volume": "9523.454411",
+      "change": "8.13",
+      "type": "spot",
+      "isFrozen": 0,
+      "url": "https://ex.xbts.io/market/XBTSX.HIVE_XBTSX.USDT"
+    }
   },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+  "totalPairs": 288
+}
 ```
 
-This endpoint retrieves all kittens.
+This endpoint retrieves all tickers.
 
-### HTTP Request
+## Ticker
 
-`GET http://example.com/api/kittens`
+**_Get specific ticker_**
+
+**Request URL** <span class='badge'>GET</span> `https://cmc.xbts.io/v2/tickers/BTS_STH`
+
+**Request Data:**
+
+ticker - as USDT_BTC
+
+**About Return Data:**
+
+* **base_id** - Unique Base ID of cryptocurrency assigned by Unified Cryptoasset ID. According to specification
+  coinmarketcap.com
+* **quote_id** - Unique Quote ID of cryptocurrency assigned by Unified Cryptoasset ID. According to specification
+  coinmarketcap.com
+
+> The above command returns JSON structured like this:
+>
+
+```json
+{
+  "BTS_STH": {
+    "base_id": 463,
+    "quote_id": 5602,
+    "base_symbol": "BTS",
+    "quote_symbol": "STH",
+    "last": "0.18800000",
+    "sell": "0.20408163",
+    "buy": "0.18800000",
+    "base_volume": "306.34583",
+    "quote_volume": "1635.48191",
+    "change": "1.34",
+    "type": "spot",
+    "isFrozen": 0,
+    "url": "https://ex.xbts.io/market/XBTSX.STH_BTS",
+    "timestamp": 1654640489
+  }
+}
+```
 
 ### Query Parameters
 
@@ -374,7 +464,7 @@ let max = api.kittens.delete(2);
 ```json
 {
   "id": 2,
-  "deleted" : ":("
+  "deleted": ":("
 }
 ```
 
