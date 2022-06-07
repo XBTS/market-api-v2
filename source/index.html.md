@@ -1,15 +1,15 @@
 ---
-title: API Reference
+title: XBTS Market API v2
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
+  - json
+  #- shell
+  #- javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
+  - <a href='https://ex.xbts.io'>XBTS DEX</a>
+  - <a href='https://app.xbts.io'>XBTS DeFi</a>
+  - <a href='https://github.com/xbts/market-api-v2'>Documentation source</a>
 
 includes:
   - errors
@@ -20,86 +20,233 @@ code_clipboard: true
 
 meta:
   - name: description
-    content: Documentation for the Kittn API
+    content: XBTS DEX Market API v2
 ---
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the XBTS Free Market API! You can use our API to access XBTS DEX API endpoints, which can get information on market assets, trade pairs, tickers.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+**Data is broadcasted from the blockchain!**
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+API endpoint `https://cmc.xbts.io/api/v2/`
 
-# Authentication
+# Summary
 
-> To authorize, use this code:
+_Overview of market data for all tickers & all markets._
 
-```ruby
-require 'kittn'
+**Request URL** <span class='badge'>GET</span> ` https://cmc.xbts.io/v2/summary`
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+**About Data:**
+
+* **tickers** - All market tickers with unified_cryptoasset_id (ucid)
+* **assets** - All listed XBTS assets with unified_cryptoasset_id (ucid)
+* **total** - Count trade pairs & assets
+
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "tickers": {
+    "BTS_STH": {
+      "base_id": 463,
+      "quote_id": 5602,
+      "base_symbol": "BTS",
+      "quote_symbol": "STH",
+      "last": "0.18800000",
+      "sell": "0.20408163",
+      "buy": "0.18800000",
+      "base_volume": "306.34583",
+      "quote_volume": "1635.48191",
+      "change": "1.34",
+      "type": "spot",
+      "isFrozen": 0,
+      "url": "https://ex.xbts.io/market/XBTSX.STH_BTS"
+    },
+    "USDT_BTC": {
+      "base_id": 825,
+      "quote_id": 1,
+      "base_symbol": "USDT",
+      "quote_symbol": "BTC",
+      "last": "31438.94939968",
+      "sell": "31438.94939968",
+      "buy": "31255.93000000",
+      "base_volume": "5957.699194",
+      "quote_volume": "0.19573896",
+      "change": "0.75",
+      "type": "spot",
+      "isFrozen": 0,
+      "url": "https://ex.xbts.io/market/XBTSX.BTC_XBTSX.USDT"
+    }
+  },
+  "assets": {
+    "STH": {
+      "name": "SmartHoldem",
+      "ucid": 5602,
+      "can_withdraw": true,
+      "can_deposit": true,
+      "min_withdraw": 10,
+      "max_withdraw ": 0,
+      "maker_fee": 0.1,
+      "taker_fee": 0.1,
+      "id": "4099",
+      "precision": 6,
+      "decimals": 8,
+      "prefix": "XBTSX.",
+      "active": true
+    },
+    "CNY": {
+      "name": "bitCNY",
+      "ucid": -1,
+      "can_withdraw": false,
+      "can_deposit": false,
+      "min_withdraw": 1,
+      "max_withdraw ": 0,
+      "maker_fee": 0,
+      "taker_fee": 0,
+      "id": "113",
+      "precision": 4,
+      "decimals": 4,
+      "prefix": "",
+      "active": true
+    },
+    "DOGE": {
+      "name": "Dogecoin",
+      "ucid": 74,
+      "can_withdraw": true,
+      "can_deposit": true,
+      "min_withdraw": 200,
+      "max_withdraw ": 0,
+      "maker_fee": 0.1,
+      "taker_fee": 0.2,
+      "id": "4156",
+      "precision": 5,
+      "decimals": 8,
+      "prefix": "XBTSX.",
+      "active": true
+    },
+    "BTC": {
+      "name": "Bitcoin",
+      "ucid": 1,
+      "can_withdraw": true,
+      "can_deposit": true,
+      "min_withdraw": 0.005,
+      "max_withdraw ": 0,
+      "maker_fee": 0.1,
+      "taker_fee": 0.1,
+      "id": "4157",
+      "precision": 8,
+      "decimals": 8,
+      "prefix": "XBTSX.",
+      "active": true
+    },
+    "ETH": {
+      "name": "Ethereum",
+      "ucid": 1027,
+      "can_withdraw": true,
+      "can_deposit": true,
+      "min_withdraw": 0.015,
+      "max_withdraw ": 0,
+      "maker_fee": 0.1,
+      "taker_fee": 0.1,
+      "id": "4760",
+      "precision": 7,
+      "decimals": 18,
+      "prefix": "XBTSX.",
+      "active": true
+    }
+  },
+  "total": {
+    "pairs": 288,
+    "assets": 60
+  }
+}
 ```
 
-```python
-import kittn
+# Assets
 
-api = kittn.authorize('meowmeowmeow')
+**_Display all listed coins & tokens_**
+
+**Request URL** <span class='badge'>GET</span> `https://cmc.xbts.io/v2/assets`
+
+**About Return Data:**
+
+* **name** - Asset name
+* **ucid** - Unique ID of cryptocurrency assigned by Unified Cryptoasset ID. According to specification coinmarketcap.com
+* **id** - BitShares Blockchain registered internal Asset ID ex. https://bts.ai/asset/XBTSX.STH id = 1.3.4099
+* **prefix** - Blockchain asset internal prefix **XBTSX.**ASSET matches all **XBTS DEX** assets in the **BitShares** blockchain ex. https://ex.xbts.io/market/XBTSX.STH_XBTSX.BTC or https://ex.xbts.io/asset/XBTSX.STH
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "STH": {
+    "name": "SmartHoldem",
+    "ucid": 5602,
+    "can_withdraw": true,
+    "can_deposit": true,
+    "min_withdraw": 10,
+    "max_withdraw ": 0,
+    "maker_fee": 0.1,
+    "taker_fee": 0.1,
+    "id": "4099",
+    "precision": 6,
+    "decimals": 8,
+    "prefix": "XBTSX.",
+    "active": true
+  },
+  "BTS": {
+    "name": "BitShares",
+    "ucid": 463,
+    "can_withdraw": true,
+    "can_deposit": true,
+    "min_withdraw": 0.1,
+    "max_withdraw ": 0,
+    "maker_fee": 0,
+    "taker_fee": 0,
+    "id": "0",
+    "precision": 5,
+    "decimals": 5,
+    "prefix": "",
+    "active": true
+  },
+  "BTC": {
+    "name": "Bitcoin",
+    "ucid": 1,
+    "can_withdraw": true,
+    "can_deposit": true,
+    "min_withdraw": 0.005,
+    "max_withdraw ": 0,
+    "maker_fee": 0.1,
+    "taker_fee": 0.1,
+    "id": "4157",
+    "precision": 8,
+    "decimals": 8,
+    "prefix": "XBTSX.",
+    "active": true
+  },
+  "USDT": {
+    "name": "TetherUSD",
+    "ucid": 825,
+    "can_withdraw": true,
+    "can_deposit": true,
+    "min_withdraw": 10,
+    "max_withdraw ": 0,
+    "maker_fee": 0.08,
+    "taker_fee": 0.08,
+    "id": "5589",
+    "precision": 6,
+    "decimals": 6,
+    "prefix": "XBTSX.",
+    "active": true
+  }
+}
 ```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
 
 # Kittens
 
 ## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
 
 > The above command returns JSON structured like this:
 
