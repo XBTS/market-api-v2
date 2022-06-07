@@ -12,6 +12,11 @@ toc_footers:
 - <a href='https://ex.xbts.io'>XBTS DEX</a>
 - <a href='https://app.xbts.io'>XBTS DeFi</a>
 - <a href='https://github.com/xbts/market-api-v2'>Documentation source</a>
+- <a href='https://ex.xbts.io/explorer/blocks'>Explorer-1</a>
+- <a href='https://bts.ai/'>Explorer-2</a>
+- <a href='https://blocksights.info/#/dashboard'>Explorer-3</a>
+- <a href='http://cryptofresh.com/'>Explorer-4</a>
+  
 
 includes:
 
