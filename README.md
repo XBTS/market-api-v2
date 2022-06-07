@@ -15,10 +15,10 @@ Ubuntu environment settings
 
 Build & Dev
 ------------------------------
-To do the first option, run:
+* To do the first option, run local server for dev:
 
 `bundle exec middleman server`
 
-The second option (building html files), run:
+* Building html files:
 
 `bundle exec middleman build`
