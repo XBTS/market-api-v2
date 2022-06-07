@@ -2,6 +2,7 @@ ruby '>= 2.6'
 source 'https://rubygems.org'
 
 # Middleman
+gem 'wdm', '~> 0.1.0'
 gem 'middleman', '~> 4.4'
 gem 'middleman-syntax', '~> 3.2'
 gem 'middleman-autoprefixer', '~> 3.0'
