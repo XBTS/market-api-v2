@@ -17,8 +17,8 @@ Build & Dev
 ------------------------------
 * To do the first option, run local server for dev:
 
-`bundle exec middleman server`
+`bundle exec middleman serve --watcher-force-polling`
 
 * Building html files:
 
-`bundle exec middleman build`
+`bundle exec middleman build --clean`
