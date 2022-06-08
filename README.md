@@ -15,10 +15,10 @@ Ubuntu environment settings
 
 Build & Dev
 ------------------------------
-* To do the first option, run local server for dev:
+* To do the first option, run local server for dev
 
 `bundle exec middleman serve --watcher-force-polling`
 
-* Building html files:
+* Building html files
 
 `bundle exec middleman build --clean`
